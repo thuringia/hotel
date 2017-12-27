@@ -1,0 +1,237 @@
+{
+  "name": "hotel",
+  "productName": "Hotel",
+  "version": "0.1.0",
+  "description":
+    "An ebook library and reader. Someday this may become a something like calibre",
+  "scripts": {
+    "_:jest": "cross-env NODE_ENV=test jest",
+    "_:prettier": "prettier --write",
+    "fmt": "yarn fmt:css && yarn fmt:js",
+    "fmt:js":
+      "yarn precommit:fmt:js \"{app,internals,server,stories,__{tests,mocks}__}/**/*.{js,jsx}\"",
+    "fmt:css":
+      "yarn precommit:fmt:css \"{app/components,scss}/**/*.{css,scss}\"",
+    "fmt:styled":
+      "yarn precommit:fmt:styled -- -r app/components/**/*.js app/components/**/*.jsx",
+    "precommit": "yarn lint:staged",
+    "precommit:fmt:js": "yarn _:prettier",
+    "precommit:fmt:json": "yarn _:prettier",
+    "precommit:fmt:css": "yarn _:prettier",
+    "precommit:lint:css": "stylelint --config .stylelintrc --fix",
+    "precommit:lint:js": "eslint --fix",
+    "precommit:lint:json": "jsonlint --in-place",
+    "precommit:lint:styled": "stylelint --config .stylelintrc-styled",
+    "precommit:test:jest": "yarn _:jest --onlyChanged",
+    "lint": "yarn fmt && yarn lint:css && yarn lint:js",
+    "lint:css": "yarn precommit:lint:css \"./{app/components,scss}/**/*.{js}\"",
+    "lint:js":
+      "yarn precommit:lint:js {app,server,stories,__{tests,mocks}__}/**/*.{js,jsx} ",
+    "lint:staged": "lint-staged",
+    "lint:styled":
+      "yarn precommit:lint:styled \"./app/components/**/*.js\" \"./app/components/**/*.jsx\"",
+    "setup:hooks": "node node_modules/husky/bin/install",
+    "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
+    "build-dll":
+      "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --colors",
+    "build-main":
+      "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.main.prod.js --colors",
+    "build-renderer":
+      "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.prod.js --colors",
+    "dev": "cross-env START_HOT=1 npm run start-renderer-dev",
+    "flow": "flow",
+    "flow-typed":
+      "rimraf flow-typed/npm && flow-typed install --overwrite || true",
+    "package": "npm run build && build --publish never",
+    "package-all": "npm run build && build -mwl",
+    "package-linux": "npm run build && build --linux",
+    "package-win": "npm run build && build --win --x64",
+    "postinstall":
+      "concurrently \"yarn setup:hooks\" \"npm run flow-typed\" \"npm run build-dll\" \"electron-builder install-app-deps\" \"node node_modules/fbjs-scripts/node/check-dev-engines.js package.json\"",
+    "prestart": "npm run build",
+    "start": "cross-env NODE_ENV=production electron ./app/",
+    "start-main-dev":
+      "cross-env HOT=1 NODE_ENV=development electron -r babel-register ./app/main.dev",
+    "start-renderer-dev":
+      "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.renderer.dev.js",
+    "test":
+      "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js",
+    "test-all":
+      "npm run lint && npm run flow && npm run build && npm run test && npm run test-e2e",
+    "test-e2e":
+      "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js e2e",
+    "test-watch": "npm test -- --watch"
+  },
+  "browserslist": "electron 1.7",
+  "build": {
+    "productName": "Hotel",
+    "appId": "de.wawrob.Hotel",
+    "files": [
+      "dist/",
+      "node_modules/",
+      "app.html",
+      "main.prod.js",
+      "main.prod.js.map",
+      "package.json"
+    ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": ["nsis"]
+    },
+    "linux": {
+      "target": ["deb", "AppImage"]
+    },
+    "directories": {
+      "buildResources": "resources",
+      "output": "release"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thuringia/hotel"
+  },
+  "author": {
+    "name": "Robert Wawrzyniak",
+    "email": "mail@wawrob.de",
+    "url": "https://github.com/thuringia"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thuringia/hotel/issues"
+  },
+  "keywords": [
+    "electron",
+    "boilerplate",
+    "react",
+    "redux",
+    "flow",
+    "sass",
+    "webpack",
+    "hot",
+    "reload"
+  ],
+  "homepage": "https://github.com/thuringia/hotel#readme",
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+        "<rootDir>/internals/mocks/fileMock.js",
+      "\\.(css|less|sass|scss)$": "identity-obj-proxy"
+    },
+    "moduleFileExtensions": ["js"],
+    "moduleDirectories": ["node_modules", "app/node_modules"],
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    },
+    "setupFiles": ["./internals/scripts/CheckBuiltsExist.js"]
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^8.1.2",
+    "babel-jest": "^22.0.4",
+    "babel-loader": "^7.1.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-dev-expression": "^0.2.1",
+    "babel-plugin-dynamic-import-webpack": "^1.0.1",
+    "babel-plugin-flow-runtime": "^0.15.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-es2015-classes": "^6.24.1",
+    "babel-preset-env": "^1.5.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-react-hmre": "^1.1.1",
+    "babel-preset-react-optimize": "^1.0.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "babili-webpack-plugin": "^0.1.2",
+    "chalk": "^2.0.1",
+    "concurrently": "^3.5.0",
+    "cross-env": "^5.0.0",
+    "cross-spawn": "^5.1.0",
+    "electron": "^1.7.10",
+    "electron-builder": "^19.8.0",
+    "electron-devtools-installer": "^2.2.0",
+    "enzyme": "^3.2.0",
+    "enzyme-to-json": "^3.3.0",
+    "eslint": "^4.14.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-formatter-pretty": "^1.1.0",
+    "eslint-import-resolver-webpack": "^0.8.3",
+    "eslint-plugin-compat": "^2.1.0",
+    "eslint-plugin-flowtype": "^2.33.0",
+    "eslint-plugin-flowtype-errors": "^3.3.0",
+    "eslint-plugin-import": "^2.6.0",
+    "eslint-plugin-jest": "^21.5.0",
+    "eslint-plugin-jsx-a11y": "6.0.3",
+    "eslint-plugin-prettier": "^2.4.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^7.1.0",
+    "express": "^4.15.3",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "fbjs-scripts": "^0.8.0",
+    "file-loader": "^1.1.6",
+    "flow-bin": "^0.61.0",
+    "flow-runtime": "^0.16.0",
+    "flow-typed": "^2.1.2",
+    "html-webpack-plugin": "^2.29.0",
+    "husky": "^0.14.3",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^22.0.4",
+    "jsdom": "^11.0.0",
+    "jsonlint": "^1.6.2",
+    "lint-staged": "^6.0.0",
+    "minimist": "^1.2.0",
+    "prettier": "1.9.2",
+    "react-addons-test-utils": "^15.6.0",
+    "react-test-renderer": "^16.2.0",
+    "redux-logger": "^3.0.6",
+    "rimraf": "^2.6.1",
+    "sinon": "^4.1.3",
+    "spectron": "^3.7.0",
+    "stylelint": "^8.4.0",
+    "stylelint-config-standard": "^18.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.2.1",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.0.0",
+    "webpack-bundle-analyzer": "^2.8.2",
+    "webpack-dev-server": "^2.5.0",
+    "webpack-merge": "^4.1.0"
+  },
+  "dependencies": {
+    "devtron": "^1.4.0",
+    "electron-debug": "^1.2.0",
+    "font-awesome": "^4.7.0",
+    "history": "^4.6.3",
+    "nedb": "^1.8.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-hot-loader": "3.1.3",
+    "react-redux": "^5.0.5",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
+    "react-router-redux": "^5.0.0-alpha.6",
+    "redux": "^3.7.1",
+    "redux-saga": "^0.16.0",
+    "source-map-support": "^0.5.0",
+    "sql.js": "^0.4.0",
+    "styled-components": "^2.4.0"
+  },
+  "devEngines": {
+    "node": ">=7.x",
+    "npm": ">=4.x",
+    "yarn": ">=0.21.3"
+  }
+}

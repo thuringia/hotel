@@ -1,0 +1,13 @@
+{
+  "{.storybook,app,internals,jquery,server,stories}/**/*.{js,jsx}": [
+    "precommit:fmt:js",
+    "git add",
+    "precommit:lint:js",
+    "git add"
+  ],
+  "{app/components,scss}/**/*.{css,scss}": [
+    "precommit:fmt:css",
+    "precommit:lint:css"
+  ],
+  "*.json": ["precommit:lint:json", "git add", "precommit:fmt:json", "git add"]
+}
