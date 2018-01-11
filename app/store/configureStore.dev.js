@@ -5,7 +5,7 @@ import createSagaMiddleware from "redux-saga";
 import { createLogger } from "redux-logger";
 
 import { rootReducer } from "../reducers";
-import { counterActions } from "../containers/CounterPage/duck";
+import { actionCreators as counterActions } from "../containers/CounterPage/duck";
 
 import type { counterStateType } from "../containers/CounterPage/duck";
 
