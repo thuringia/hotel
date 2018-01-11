@@ -32,7 +32,8 @@ const installExtensions = async () => {
   const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
   const extensions = [
     'REACT_DEVELOPER_TOOLS',
-    'REDUX_DEVTOOLS'
+    'REDUX_DEVTOOLS',
+    'REACT_PERF'
   ];
 
   return Promise
