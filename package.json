@@ -62,7 +62,8 @@
       "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js e2e",
     "test-watch": "npm test -- --watch",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "generate": "plop --plopfile internals/generators/index.js"
   },
   "browserslist": "electron 1.7",
   "build": {
@@ -143,6 +144,9 @@
     "webpack-sources": "1.0.1"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.3.8",
+    "@storybook/addon-links": "^3.3.8",
+    "@storybook/react": "^3.3.8",
     "babel-core": "^6.24.1",
     "babel-eslint": "^8.2.1",
     "babel-jest": "^22.0.6",
@@ -199,6 +203,7 @@
     "jsonlint": "^1.6.2",
     "lint-staged": "^6.0.0",
     "minimist": "^1.2.0",
+    "plop": "1.9.1",
     "prettier": "1.10.2",
     "react-addons-test-utils": "^15.6.0",
     "react-test-renderer": "^16.2.0",
@@ -215,16 +220,14 @@
     "webpack-bundle-analyzer": "^2.9.2",
     "webpack-dev-server": "^2.10.1",
     "webpack-merge": "^4.1.0",
-    "webpack-sources": "1.0.1",
-    "@storybook/react": "^3.3.8",
-    "@storybook/addon-actions": "^3.3.8",
-    "@storybook/addon-links": "^3.3.8"
+    "webpack-sources": "1.0.1"
   },
   "dependencies": {
     "devtron": "^1.4.0",
     "electron-debug": "^1.5.0",
     "font-awesome": "^4.7.0",
     "history": "^4.6.3",
+    "immutable": "^3.8.2",
     "nedb": "^1.8.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -235,6 +238,7 @@
     "react-router-redux": "^5.0.0-alpha.6",
     "redux": "^3.7.1",
     "redux-saga": "^0.16.0",
+    "reselect": "^3.0.1",
     "source-map-support": "^0.5.0",
     "sql.js": "^0.5.0",
     "styled-components": "^2.4.0"
