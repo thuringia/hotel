@@ -61,7 +61,7 @@
     "test-e2e":
       "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js e2e",
     "test-watch": "npm test -- --watch",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "cross-env NODE_ENV=development start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "generate": "plop --plopfile internals/generators/index.js"
   },
@@ -145,7 +145,11 @@
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.3.8",
+    "@storybook/addon-backgrounds": "^3.3.8",
+    "@storybook/addon-info": "^3.3.8",
+    "@storybook/addon-knobs": "^3.3.8",
     "@storybook/addon-links": "^3.3.8",
+    "@storybook/addon-options": "^3.3.8",
     "@storybook/react": "^3.3.8",
     "babel-core": "^6.24.1",
     "babel-eslint": "^8.2.1",
@@ -187,8 +191,8 @@
     "eslint-plugin-jest": "^21.6.1",
     "eslint-plugin-jsx-a11y": "6.0.3",
     "eslint-plugin-prettier": "^2.4.0",
-    "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-react": "^7.1.0",
+    "eslint-plugin-redux-saga": "^0.6.0",
     "express": "^4.15.3",
     "fbjs-scripts": "^0.8.0",
     "file-loader": "^1.1.6",
@@ -237,6 +241,7 @@
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^5.0.0-alpha.6",
     "redux": "^3.7.1",
+    "redux-immutable": "^4.0.0",
     "redux-saga": "^0.16.0",
     "reselect": "^3.0.1",
     "source-map-support": "^0.5.0",

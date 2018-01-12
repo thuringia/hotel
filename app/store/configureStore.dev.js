@@ -1,21 +1,18 @@
 import { createHashHistory } from "history";
+import { /* Map, */ fromJS /* , toJS */ } from "immutable";
 import { createStore, applyMiddleware, compose } from "redux";
 import { routerMiddleware, routerActions } from "react-router-redux";
 import createSagaMiddleware from "redux-saga";
 import { createLogger } from "redux-logger";
 
-import { rootReducer } from "../reducers";
+import createReducer from "../reducers";
+import globalSagas from "../sagas";
 import { actionCreators as counterActions } from "../containers/CounterPage/duck";
-
-import type { counterStateType } from "../containers/CounterPage/duck";
 
 const history = createHashHistory();
 const sagaMiddleware = createSagaMiddleware();
 
-const configureStore = (initialState?: counterStateType) => {
-  // Redux Configuration
-  const enhancers = [];
-
+const configureStore = (initialState = {}) => {
   // Create the store with two middlewares
   // 1. sagaMiddleware: Makes redux-sagas work
   // 2. routerMiddleware: Syncs the location/URL path to the state
@@ -24,6 +21,9 @@ const configureStore = (initialState?: counterStateType) => {
     createLogger({ level: "info", collapsed: true }),
     routerMiddleware(history)
   ];
+
+  // Redux Configuration
+  const enhancers = [applyMiddleware(...middleware)];
 
   // Redux DevTools Configuration
   const actionCreators = {
@@ -40,20 +40,30 @@ const configureStore = (initialState?: counterStateType) => {
     : compose;
   /* eslint-enable no-underscore-dangle */
 
-  // Apply Middleware & Compose Enhancers
-  enhancers.push(applyMiddleware(...middleware));
-  const enhancer = composeEnhancers(...enhancers);
+  const store = createStore(
+    createReducer(),
+    fromJS(initialState),
+    composeEnhancers(...enhancers)
+  );
 
-  // Create Store
-  const store = createStore(rootReducer, initialState, enhancer);
+  // Extensions
+  store.runSaga = sagaMiddleware.run;
+  globalSagas.map(store.runSaga); // inject global sagas
 
+  store.asyncReducers = {}; // Async reducer registry
+
+  // Make reducers hot reloadable, see http://mxs.is/googmo
+  /* istanbul ignore next */
   if (module.hot) {
-    module.hot.accept(
-      "../reducers",
-      () => store.replaceReducer(require("../reducers")) // eslint-disable-line global-require
-    );
-  }
+    module.hot.accept("../reducers", () => {
+      import("../reducers").then(reducerModule => {
+        const createReducers = reducerModule.default;
+        const nextReducers = createReducers(store.asyncReducers);
 
+        store.replaceReducer(nextReducers);
+      });
+    });
+  }
   return store;
 };
 
