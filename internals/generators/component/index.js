@@ -38,6 +38,18 @@ module.exports = {
       name: "wantMessages",
       default: true,
       message: "Do you want i18n messages (i.e. will this component use text)?"
+    },
+    {
+      type: "confirm",
+      name: "wantStyles",
+      default: true,
+      message: "Do you want styling (i.e. export a styled-component)?"
+    },
+    {
+      type: "confirm",
+      name: "wantTypes",
+      default: false,
+      message: "Do you want flow types?"
     }
   ],
   actions: data => {

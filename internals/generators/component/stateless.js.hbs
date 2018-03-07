@@ -1,3 +1,6 @@
+{{#if wantTypes}}
+// @flow
+{{/if}}
 /**
 *
 * {{ properCase name }}
@@ -6,12 +9,15 @@
 
 import React from "react";
 import PropTypes from "prop-types";
+{{#if wantStyles}}
+import styled from "styled-components";
+{{/if}}
 
 {{#if wantMessages}}
 import messages from "./messages";
 {{/if}}
 
-function {{ properCase name }}({{#if wantMessages}}{ i18n }{{/if}}) {
+export const {{ properCase name }}Component => ({{#if wantMessages}}{ i18n }{{/if}}) {
   return (
     <div>
     {{#if wantMessages}}
@@ -21,10 +27,17 @@ function {{ properCase name }}({{#if wantMessages}}{ i18n }{{/if}}) {
   );
 }
 
-{{ properCase name }}.propTypes = {
+{{ properCase name }}Component.propTypes = {
 {{#if wantMessages}}
   i18n: PropTypes.func.isRequired
 {{/if}}
 };
 
-export default {{ properCase name }};
+{{#if wantStyles}}
+export const {{ properCase name }}Styled = styled({{ properCase name }})`
+  color: red;
+`;
+export const {{ properCase name }} = {{ properCase name }}Styled;
+{{else}}
+export const {{ properCase name }} = {{ properCase name }}Component;
+{{/if}}

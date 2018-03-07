@@ -1,3 +1,6 @@
+{{#if wantTypes}}
+// @flow
+{{/if}}
 /**
 *
 * {{ properCase name }}
@@ -6,12 +9,15 @@
 
 import React from "react";
 import PropTypes from "prop-types";
+{{#if wantStyles}}
+import styled from "styled-components";
+{{/if}}
 
 {{#if wantMessages}}
 import messages from "./messages";
 {{/if}}
 
-class {{ properCase name }} extends React.Component {
+export class {{ properCase name }}Component extends React.Component {
   static propTypes = {
   {{#if wantMessages}}
     i18n: PropTypes.func.isRequired
@@ -29,4 +35,11 @@ class {{ properCase name }} extends React.Component {
   }
 }
 
-export default {{ properCase name }};
+{{#if wantStyles}}
+export const {{ properCase name }}Styled = styled({{ properCase name }})`
+  color: red;
+`;
+export const {{ properCase name }} = {{ properCase name }}Styled;
+{{else}}
+export const {{ properCase name }} = {{ properCase name }}Component;
+{{/if}}
