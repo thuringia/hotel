@@ -21,6 +21,7 @@
     },
     "development": {
       "plugins": [
+        "react-hot-loader/babel",
         "babel-plugin-styled-components",
         "transform-class-properties",
         "transform-es2015-classes",

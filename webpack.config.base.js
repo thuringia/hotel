@@ -7,6 +7,7 @@ import webpack from 'webpack';
 import { dependencies as externals } from './app/package.json';
 
 export default {
+  mode: 'development',
   externals: Object.keys(externals || {}),
 
   module: {
@@ -44,7 +45,5 @@ export default {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
     }),
-
-    new webpack.NamedModulesPlugin(),
   ],
 };

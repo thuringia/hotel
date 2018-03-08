@@ -7,7 +7,7 @@ import { actionCreators } from "./duck";
 
 function mapStateToProps(state) {
   return {
-    counter: state.counter
+    counter: state.get("counter")
   };
 }
 
