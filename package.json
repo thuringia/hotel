@@ -95,7 +95,7 @@
       "target": ["nsis"]
     },
     "linux": {
-      "target": ["deb", "AppImage"]
+      "target": ["snap", "AppImage"]
     },
     "directories": {
       "buildResources": "resources",
@@ -174,7 +174,7 @@
     "cross-env": "^5.0.0",
     "cross-spawn": "^6.0.5",
     "electron": "^1.7.10",
-    "electron-builder": "^19.52.1",
+    "electron-builder": "^20.4.0",
     "electron-devtools-installer": "^2.2.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",

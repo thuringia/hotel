@@ -1,13 +1,13 @@
-sudo: false
+sudo:           false
 
-language: node_js
+language:       node_js
 
 node_js:
   - 8
   - 7
 
 cache:
-  yarn: true
+  yarn:         true
   directories:
     - node_modules
     - app/node_modules
@@ -18,7 +18,7 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - g++-4.8
-      - icnsutils
+      - libopenjp2-tools
       - graphicsmagick
       - xz-utils
       - xorriso
