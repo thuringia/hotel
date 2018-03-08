@@ -44,6 +44,10 @@ export default merge.smart(baseConfig, {
     path.join(__dirname, 'app/index.js'),
   ],
 
+  optimization: {
+    noEmitOnErrors: true
+  },
+
   output: {
     publicPath: `http://localhost:${port}/dist/`
   },
@@ -139,8 +143,6 @@ export default merge.smart(baseConfig, {
       // @TODO: Waiting on https://github.com/jantimon/html-webpack-plugin/issues/533
       // multiStep: true
     }),
-
-    new webpack.NoEmitOnErrorsPlugin(),
 
     /**
      * Create global constants which can be configured at compile time.
