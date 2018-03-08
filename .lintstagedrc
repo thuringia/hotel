@@ -1,13 +1,18 @@
 {
   "{.storybook,app,internals,jquery,server,stories}/**/*.{js,jsx}": [
-    "precommit:fmt:js",
+    "yarn precommit:fmt:js",
     "git add",
-    "precommit:lint:js",
+    "yarn precommit:lint:js",
     "git add"
   ],
   "{app/components,scss}/**/*.{css,scss}": [
-    "precommit:fmt:css",
-    "precommit:lint:css"
+    "yarn precommit:fmt:css",
+    "yarn precommit:lint:css"
   ],
-  "*.json": ["precommit:lint:json", "git add", "precommit:fmt:json", "git add"]
+  "*.json": [
+    "yarn precommit:lint:json",
+    "git add",
+    "yarn precommit:fmt:json",
+    "git add"
+  ]
 }

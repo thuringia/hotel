@@ -205,7 +205,7 @@
     "jest": "^22.0.6",
     "jsdom": "^11.0.0",
     "jsonlint": "^1.6.2",
-    "lint-staged": "^6.0.0",
+    "lint-staged": "^7.0.0",
     "minimist": "^1.2.0",
     "plop": "1.9.1",
     "prettier": "1.11.1",
