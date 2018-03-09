@@ -249,8 +249,8 @@
     "styled-components": "^3.2.1"
   },
   "devEngines": {
-    "node": ">=7.x",
-    "npm": ">=4.x",
-    "yarn": ">=0.21.3"
+    "node": ">=9.x",
+    "npm": ">=5.x",
+    "yarn": ">=1.5.0"
   }
 }
