@@ -44,6 +44,8 @@
       "rimraf flow-typed/npm && flow-typed install --overwrite || true",
     "package": "npm run build && build --publish never",
     "package-all": "npm run build && build -mwl",
+    "package-mac": "npm run build && build --mac",
+    "package-lw": "npm run build && build -lw",
     "package-linux": "npm run build && build --linux",
     "package-win": "npm run build && build --win --x64",
     "postinstall":
