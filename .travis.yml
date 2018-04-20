@@ -25,7 +25,7 @@ cache:
 
 script:
   - node --version
-  - yarn lint
+  #- yarn lint
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
       docker run --rm \
@@ -38,8 +38,8 @@ script:
     else
       yarn package-mac
     fi
-  - yarn test
-  - yarn test-e2e
+  #- yarn test
+  #- yarn test-e2e
 
 before_cache:
   - rm -rf $HOME/.cache/electron-builder/wine
