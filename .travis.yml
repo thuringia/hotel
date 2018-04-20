@@ -1,49 +1,48 @@
-before_install:                   yarn global add greenkeeper-lockfile@1
-before_script:                    greenkeeper-lockfile-update
-after_script:                     greenkeeper-lockfile-upload
-
+before_install: yarn global add greenkeeper-lockfile@1
+before_script: greenkeeper-lockfile-update
+after_script: greenkeeper-lockfile-upload
 matrix:
   include:
-    - os:                         osx
-      osx_image:                  xcode9.2
-      language:                   node_js
-      node_js:                    "9"
-      env:
-        - ELECTRON_CACHE=$HOME/.cache/electron
-        - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
-    - os:                         linux
-      services:                   docker
-      language:                   generic
-
+  - os: osx
+    osx_image: xcode9.2
+    language: node_js
+    node_js: '9'
+    env:
+    - ELECTRON_CACHE=$HOME/.cache/electron
+    - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+  - os: linux
+    services: docker
+    language: generic
 cache:
-  yarn:                           true
+  yarn: true
   directories:
   - node_modules
   - app/node_modules
-  - $HOME/.cache/electron
-  - $HOME/.cache/electron-builder
-
+  - "$HOME/.cache/electron"
+  - "$HOME/.cache/electron-builder"
 script:
-  - node --version
-  #- yarn lint
-  - |
-    if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-      docker run --rm \
-        --env-file <(env | grep -iE 'DEBUG|NODE_|ELECTRON_|YARN_|NPM_|CI|CIRCLE|TRAVIS|APPVEYOR_|CSC_|_TOKEN|_KEY|AWS_|STRIP|BUILD_') \
-        -v ${PWD}:/project \
-        -v ~/.cache/electron:/root/.cache/electron \
-        -v ~/.cache/electron-builder:/root/.cache/electron-builder \
-        electronuserland/builder:wine \
-        /bin/bash -c "yarn --link-duplicates --pure-lockfile && yarn package-lw"
-    else
-      yarn package-mac
-    fi
-  #- yarn test
-  #- yarn test-e2e
-
+- node --version
+- |
+  if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+    docker run --rm \
+      --env-file <(env | grep -iE 'DEBUG|NODE_|ELECTRON_|YARN_|NPM_|CI|CIRCLE|TRAVIS|APPVEYOR_|CSC_|_TOKEN|_KEY|AWS_|STRIP|BUILD_') \
+      -v ${PWD}:/project \
+      -v ~/.cache/electron:/root/.cache/electron \
+      -v ~/.cache/electron-builder:/root/.cache/electron-builder \
+      electronuserland/builder:wine \
+      /bin/bash -c "yarn --link-duplicates --pure-lockfile && yarn package-lw"
+  else
+    yarn package-mac
+  fi
 before_cache:
-  - rm -rf $HOME/.cache/electron-builder/wine
-
+- rm -rf $HOME/.cache/electron-builder/wine
 branches:
   except:
-    - "/^v\\d+\\.\\d+\\.\\d+$/"
+  - "/^v\\d+\\.\\d+\\.\\d+$/"
+deploy:
+  provider: releases
+  api_key:
+    secure: GOiq0v2LHgcF7U6mapEpZ4UzwXffjFCTwS9dIyQP/M4hM1qnrYfiVcECnRaJ0J/W6dl50I9Mdp1rw/pQU0Au6q2ZS9661E5w/cjOq3953b3zXW0fbXqFZAElh4F+l/X2FiEg3bCUEw/murINxRE6YtzXW7krt6I/E3htlfnJ6xpyKadlCG/GdWWcFKGmb96/pbeKmqjvqJrnR8vU2+MGhzsugdA6nmjj43LLLguhH0ufdsRNKCPwGWk9SieORNdN5RQWEUwEwyjwgyF4SnJmbHQL3CwaoLiv6YSkiHIl/1Drr8zX0SLXWB5MVg4vgJlnTCr3+tqr4tTpG2pbgfj7mcUcdcEkb58vYTAafMtDWrVX/2PmbxevYxbNlpbk3rJpkFa0OlU0osHXjyn7+aIIt7GwFicfS5kaZ8RXCFk8BR++tEoFr0aLT8UyfQfLRxU03YKfq5WIguduqJK6dGxIGO4V+lN9y+aSi2P4sYg9ckaPui4mQMQBqGoOIJ8NpXyR1Xe52Fr6rW9COGFRpdo4IcQu/xSu6RM+haunNZK2pMsCngUmkfZvpf7NwQIJaK+IXNl0toY7O8FLOGY1b9EyX6azrSr5qKuWwSDgczei/XVvTDRBWPfaRtbyOQFjcA8MTjjq9XYFTIXfdnF2hlyAnawwl4NMeBHUwpMD23aVZZM=
+  file: releases/*.{dmg,exe,snap,AppImage}
+  on:
+    repo: thuringia/hotel
