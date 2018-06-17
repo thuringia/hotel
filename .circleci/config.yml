@@ -35,7 +35,7 @@ jobs:
       - run:            greenkeeper-lockfile-update
       - run:            yarn install
       - run:            yarn bootstrap
-      - run:            lerna run yarn build
+      - run:            yarn build
       - run:            greenkeeper-lockfile-upload
 
       - save_cache:
