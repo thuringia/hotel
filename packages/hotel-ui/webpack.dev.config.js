@@ -1,4 +1,4 @@
-const path =require('path');
+const path = require("path");
 
 module.exports = require("./webpack.base.config")({
   /*
@@ -10,9 +10,7 @@ module.exports = require("./webpack.base.config")({
     path.join(process.cwd(), "app/Entry.js")
   ],
   */
-  entry: [
-    path.join(process.cwd(), "app/Entry.js")
-  ],
+  entry: [path.join(process.cwd(), "app/Entry.js")],
 
   externals: {
     jsdom: "window",
