@@ -26,13 +26,12 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run:
-          - yarn global add greenkeeper-lockfile@1
-          - greenkeeper-lockfile-update
-          - yarn install
-          - yarn boostrap
-          - lerna run yarn build
-          - greenkeeper-lockfile-upload
+      - run:            yarn global add greenkeeper-lockfile@1
+      - run:            greenkeeper-lockfile-update
+      - run:            yarn install
+      - run:            yarn boostrap
+      - run:            lerna run yarn build
+      - run:            greenkeeper-lockfile-upload
 
       - save_cache:
           paths:
