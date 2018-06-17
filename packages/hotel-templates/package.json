@@ -1,0 +1,8 @@
+{
+  "name": "@thuringia/hotel-templates",
+  "version": "0.0.0",
+  "description": "templates for configs etc",
+  "main": "\"\"",
+  "author": "Robert Wawrzyniak",
+  "license": "MIT"
+}
