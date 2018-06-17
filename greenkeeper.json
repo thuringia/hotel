@@ -1,0 +1,12 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "package.json",
+        "packages/hotel-app/package.json",
+        "packages/hotel-templates/package.json",
+        "packages/hotel-ui/package.json"
+      ]
+    }
+  }
+}
