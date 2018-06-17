@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "build": "lerna run yarn build",
+    "build": "lerna run build",
     "pretest": "eslint packages",
     "test": "jest",
     "_:prettier": "prettier --write",
