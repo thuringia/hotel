@@ -34,7 +34,7 @@ jobs:
             yarn global add greenkeeper-lockfile@1
       - run:            greenkeeper-lockfile-update
       - run:            yarn install
-      - run:            yarn boostrap
+      - run:            yarn bootstrap
       - run:            lerna run yarn build
       - run:            greenkeeper-lockfile-upload
 
