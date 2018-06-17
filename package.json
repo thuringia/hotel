@@ -7,23 +7,23 @@
   "scripts": {
     "_:jest": "cross-env NODE_ENV=test jest",
     "_:prettier": "prettier --write",
-    "fmt": "yarn fmt:css && yarn fmt:js",
+    "fmt": "yarn fmt:styled && yarn fmt:js",
     "fmt:js":
       "yarn precommit:fmt:js \"{app,internals,server,stories,__{tests,mocks}__}/**/*.{js,jsx}\"",
     "fmt:css":
       "yarn precommit:fmt:css \"{app/components,scss}/**/*.{css,scss}\"",
     "fmt:styled":
-      "yarn precommit:fmt:styled -- -r app/components/**/*.js app/components/**/*.jsx",
+      "yarn precommit:fmt:js \"app/components/**/*.{js,jsx}\"",
     "precommit": "yarn lint:staged",
     "precommit:fmt:js": "yarn _:prettier",
     "precommit:fmt:json": "yarn _:prettier",
     "precommit:fmt:css": "yarn _:prettier",
-    "precommit:lint:css": "stylelint --config .stylelintrc --fix",
+    "precommit:lint:css": "stylelint --config .stylelintrc-css --fix",
     "precommit:lint:js": "eslint --fix",
     "precommit:lint:json": "jsonlint --in-place",
-    "precommit:lint:styled": "stylelint --config .stylelintrc-styled",
+    "precommit:lint:styled": "stylelint --config .stylelintrc",
     "precommit:test:jest": "yarn _:jest --onlyChanged",
-    "lint": "yarn fmt && yarn lint:css && yarn lint:js",
+    "lint": "yarn fmt && yarn lint:styled && yarn lint:js",
     "lint:css": "yarn precommit:lint:css \"./{app/components,scss}/**/*.{js}\"",
     "lint:js":
       "yarn precommit:lint:js {app,server,stories,__{tests,mocks}__}/**/*.{js,jsx} ",
