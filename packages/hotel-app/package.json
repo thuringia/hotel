@@ -28,7 +28,7 @@
     "@thuringia/hotel-ui": "^0.0.0",
     "carbon-components-react": "^6.5.0",
     "react": "^16.8.0",
-    "react-dom": "^16.4.1",
+    "react-dom": "^16.8.0",
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-redux": "^4.0.8",
