@@ -22,7 +22,7 @@
     "webpack-bundle-analyzer": "^2.13.1"
   },
   "dependencies": {
-    "react": "^16.4.1",
+    "react": "^16.8.2",
     "react-dom": "^16.4.1"
   }
 }
