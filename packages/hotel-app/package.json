@@ -9,7 +9,7 @@
     "build": "webpack --config ./webpack.dev.config.js --verbose"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.51",
+    "@babel/core": "^7.4.0",
     "@babel/preset-env": "^7.0.0-beta.51",
     "@babel/preset-react": "^7.0.0-beta.51",
     "babel-loader": "next",
